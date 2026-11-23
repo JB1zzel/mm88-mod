@@ -1,0 +1,57 @@
+Manic Miner '88
+===============
+
+Manic Miner '88 is a faithful conversion of the classic ZX Spectrum 
+game written by Matthew Smith. All the features, graphics and sounds of 
+the original are present, although unfortunately the colours could not 
+be reproduced on the Z88! :-(
+
+The game behaves like any standard Z88 application and may be suspended 
+at any time. Commands and options are available through the standard 
+menu system, although there was not room to provide any online help.
+
+The in-game "music" option only toggles the tune on and off (other 
+sound effects and the title screen music still occur), so if you want 
+to play totally without sound you should turn off the sound setting in 
+the Panel.
+
+The following options are available:
+
+Display: The Z88's screen is too narrow to show the entire play area at 
+once, so this option allows you to select between two ways to view it. 
+The default method (scroll) is to display graphics at full size and 
+scroll the screen when necessary. The other method (squash) compresses 
+the graphics vertically to fit everything on screen at once.
+
+Q / A (hack): In scroll display mode the view starts at Willy's height
+when a cavern begins, then stays put: Q scrolls up and A scrolls down one
+row at a time. Q/A also work while paused without unpausing (any other key
+resumes). Has no effect in squash mode.
+
+Invert: Another display option, this allows you to choose a light or 
+dark background to the caverns.
+
+Version: Two versions of Manic Miner were released on the Spectrum: the 
+original Bug-Byte release, and a later one from Software Projects. 
+These had different graphics on some caverns, a different scrolling 
+message and a different "cheat" method. This option allows you to 
+select the behaviour of the Z88 game.
+
+The following commands are also available:
+
+Load levels: Allows you to select a file containing alternate levels to 
+the standard Manic Miner caverns. Several updated versions of the 
+Spectrum game have been produced recently, and you can play some of 
+these using files obtained from the Z88 Forever! website.
+
+IMPORTANT HEALTH WARNING! Some of the available edited versions allow 
+illegal moves off the edges of the screen - this could cause corruption 
+of your Z88's memory. Please check the notes on the website, and backup 
+your Z88 before playing any dodgy versions.
+
+Redefine keys: Select your own control keys using this command.
+
+Quit: This kills the game, so probably will not be much use to you ;-)
+
+
+Garry Lancaster, 19th July 1998

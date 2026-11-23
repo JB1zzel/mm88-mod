@@ -1,0 +1,46 @@
+; mmz88_oz.def - the OZ names Manic Miner '88 uses, with the values from the standard
+; OZ definition files (stdio.def, fileio.def, director.def, error.def, syspar.def,
+; saverst.def, screen.def, map.def, blink.def).  Kept local so the build does not depend
+; on which def set is on the include path (a full set can define names such as app_dor).
+; To use the standard files instead, replace  include "mmz88_oz.def"  with those includes
+; plus macros.def (which also includes dor.def).
+
+; OZ call macro, as in OZ's macros.def (Gunther Strube): RST 20H then a 1-byte (low level)
+; or 2-byte (high level / generic) call number.  Skipped if macros.def is already included.
+IF !__MACROS_DEF__
+macro oz (syscall)
+        rst     20h
+    if \syscall > 255
+        defw    \syscall
+    else
+        defb    \syscall
+    endif
+endmacro
+ENDIF
+
+defc Os_Bye   = $21            ; stdio.def   exit application
+defc Os_Out   = $27            ; stdio.def   write a byte to standard output
+defc Os_In    = $2A            ; stdio.def   read a byte from standard input
+defc Os_Tin   = $2D            ; stdio.def   read a byte with timeout
+defc Os_Pur   = $33            ; stdio.def   purge keyboard buffer
+defc Os_Mv    = $45            ; fileio.def  move bytes between stream and memory
+defc Os_Frm   = $48            ; fileio.def  file read miscellaneous
+defc Os_Fwm   = $4B            ; fileio.def  file write miscellaneous
+defc Os_Nq    = $66            ; syspar.def  enquire parameter
+defc Os_Sr    = $6C            ; saverst.def save & restore
+defc Os_Esc   = $6F            ; error.def   examine special condition
+defc Dc_Nam   = $0C0C          ; director.def name current application
+defc Gn_Sip   = $3809          ; stdio.def   system input line
+defc Gn_Sop   = $3A09          ; stdio.def   write string to standard output
+defc Gn_Err   = $4A09          ; error.def   interactive error box
+defc Gn_Esa   = $5E09          ; fileio.def  read/write filename segments
+defc Gn_Opf   = $6009          ; fileio.def  open file
+defc Gn_Cl    = $6209          ; fileio.def  close file
+defc Os_Sci   = $D406          ; screen.def  screen base registers
+defc Os_Map   = $F406          ; map.def     PipeDream map control
+
+defc RC_Time  = $02            ; error.def   timeout
+
+defc BLSC_COM = $04B0          ; blink.def   soft copy of COM
+defc BLSC_SR2 = $04D2          ; blink.def   soft copy of segment 2 register
+defc BL_TIM0  = $D0            ; blink.def   TIM0, 5 ms ticks 0..199
