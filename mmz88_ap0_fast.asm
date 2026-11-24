@@ -3187,25 +3187,51 @@ menu_command:
         ld hl,qa_dn
         cp $41                      ; A
         jr nz,mc_codes
-qa_learn:                           ; the key is down now: remember its matrix position, so
-        ld bc,$7FB2                 ; qa_render can see it held; and ask for one row's scroll
-ql_row:
+qa_learn:                           ; remember where this key is on the matrix, so qa_render can
+        ld de,0                     ; see it held - but only if it is the only key down and not
+        ld bc,$7FB2                 ; one of the game's own keys (a quick tap may already be over
+ql_row:                             ; by the time OZ hands us the character, with P still held)
         in a,(c)
         cpl
         or a
-        jr nz,ql_found
-        rrc b
-        jr c,ql_row
-        jr ql_pending               ; already released
-ql_found:
+        jr z,ql_next
+        inc d
+        dec d
+        jr nz,ql_pending            ; keys in two rows: don't guess
         ld e,a
         neg
         and e                       ; lowest key down in this row
         cp e
-        jr nz,ql_pending            ; two keys in the row: don't guess
-        ld (hl),b
+        jr nz,ql_pending            ; two keys in this row: don't guess
+        ld d,b                      ; D = row select, E = column mask
+ql_next:
+        rrc b
+        jr c,ql_row
+        ld a,d
+        or a
+        jr z,ql_pending             ; nothing down any more
+        push hl
+        ld hl,key_left              ; compare with the six game keys (row, mask, label)
+        ld b,6
+ql_key:
+        ld a,(hl)
+        cp d
         inc hl
-        ld (hl),a
+        jr nz,ql_key_next
+        ld a,(hl)
+        cp e
+        jr z,ql_game_key
+ql_key_next:
+        inc hl
+        inc hl
+        djnz ql_key
+        pop hl
+        ld (hl),d
+        inc hl
+        ld (hl),e
+        jr ql_pending
+ql_game_key:
+        pop hl
 ql_pending:
         pop af
         push af

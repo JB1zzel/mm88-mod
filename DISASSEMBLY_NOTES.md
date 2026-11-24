@@ -128,7 +128,7 @@ reprinted only when changed (options bit 7); no OS_NQ on OS_TIN timeouts; unroll
 Squash mode removed (blitter path, half-height piano keys, 'Display:' status text, menu handler):
 options bit 0 is now unused, and the Display command is moved to the end of the OPTIONS list with
 attribute $04 (CMDF_HIDDEN, the byte before the entry's trailing length) so the menu shows only
-Invert and Version (checked on OZ 5).  116 bytes free at $FF4C.
+Invert and Version (checked on OZ 5).  83 bytes free at $FF6D.
 
 ## Enquiry entry point (E965)
 The 8 bytes after the entry `jp app_init` are not dead code: OZ calls entry+3 (the enquiry entry
@@ -140,7 +140,9 @@ working attribute buffer, both rebuilt every frame) back to OZ while the game is
 - Sound: the nine sound loops no longer run between OZ_Di/OZ_Ei ($0051/$0054), so OZ's tick, keyboard
   and serial interrupts keep running (expect a slightly rougher tone).
 - Q/A: the first press arrives from OZ as a character (so it is the key labelled Q/A on any keyboard
-  layout); `menu_command` then records that key's matrix position in `qa_up`/`qa_dn` ($1F70/$1F72: row
+  layout); `menu_command` then records that key's matrix position - only if it is the only key down
+  and not one of the six game keys, since a quick tap can be released before OZ's character is read
+  (an earlier build learned P that way, so P scrolled the view) in `qa_up`/`qa_dn` ($1F70/$1F72: row
   select, column mask; $FF,$FF = not yet known) and sets a one-row step pending (options bit 0 = up,
   bit 6 = down).  `qa_render` scrolls one row per frame while the learned key is held, or once for a tap.
   The DOR's safe workspace grew from $8A to $8E bytes for this ($1F70-$1FFD).
